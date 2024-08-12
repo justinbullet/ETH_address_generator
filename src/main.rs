@@ -5,7 +5,7 @@ use hex::decode;
 
 fn main() {
     let app = app::App::default();
-    let mut wind = Window::new(100, 100, 400, 200, "Public Key to Address");
+    let mut wind = Window::new(100, 100, 600, 300, "Public Key to Address");
 
     let  input = Input::new(160, 40, 200, 30, "Public Key:");
     let mut output = Frame::new(160, 80, 200, 30, "")
@@ -20,6 +20,7 @@ fn main() {
         let public_key = input.value();
         if let Ok(address) = public_key_to_address(&public_key) {
             output.set_label(&format!("Address: {:?}", address));
+            println!("Address: {:?}", address);
         } else {
             output.set_label("Invalid Public Key");
         }
