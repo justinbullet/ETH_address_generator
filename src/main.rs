@@ -1,4 +1,4 @@
-use fltk::{app, button::Button, input::Input, frame::Frame, prelude::*, window::Window};
+use fltk::{app, button::Button, input::Input, frame::Frame, prelude::*, window::Window,enums::Align};
 use web3::types::H160;
 use tiny_keccak::{Keccak, Hasher};
 use hex::decode;
@@ -8,7 +8,8 @@ fn main() {
     let mut wind = Window::new(100, 100, 400, 200, "Public Key to Address");
 
     let  input = Input::new(160, 40, 200, 30, "Public Key:");
-    let mut output = Frame::new(160, 80, 200, 30, "");
+    let mut output = Frame::new(160, 80, 200, 30, "")
+    .with_align(Align::Wrap|Align::Center);
 
     let mut but = Button::new(160, 120, 80, 40, "Convert");
 
@@ -29,7 +30,7 @@ fn main() {
 
 fn public_key_to_address(public_key: &str) -> Result<H160, &'static str> {
     // Check if the public key is valid (should be 130 characters for uncompressed key)
-    if public_key.len() != 130 {
+    if public_key.len() != 128 {
         return Err("Invalid length");
     }
 
