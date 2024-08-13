@@ -1,5 +1,5 @@
 use fltk::{app, button::Button, input::Input, frame::Frame, prelude::*, window::Window,enums::Align};
-use web3::types::H160;
+use web3::types::H256;
 use tiny_keccak::{Keccak, Hasher};
 use hex::decode;
 
@@ -29,7 +29,7 @@ fn main() {
     app.run().unwrap();
 }
 
-fn public_key_to_address(public_key: &str) -> Result<H160, &'static str> {
+fn public_key_to_address(public_key: &str) -> Result<H256, &'static str> {
     // Check if the public key is valid (should be 130 characters for uncompressed key)
     if public_key.len() != 128 {
         return Err("Invalid length");
@@ -41,9 +41,8 @@ fn public_key_to_address(public_key: &str) -> Result<H160, &'static str> {
     let hash = keccak256(&public_key_bytes[1..]);
 
     // Take the last 20 bytes
-    let address_bytes = &hash[12..];
-
-    Ok(H160::from_slice(address_bytes))
+    let address_bytes = &hash[13..];
+    Ok(H256::from_slice(address_bytes))
 }
 
 fn keccak256(data: &[u8]) -> [u8; 32] {
